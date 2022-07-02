@@ -1,0 +1,5 @@
+Drawing box : https://github.com/SethPipho/opencv-draw-annotation
+
+Captha : https://github.com/6ftClaud/Lineage-Bot
+
+Color Range : https://stackoverflow.com/questions/31460267/python-opencv-color-tracking/31465462#31465462
