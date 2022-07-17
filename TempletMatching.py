@@ -16,11 +16,11 @@ template = cv2.imread('ImagesQuery/rightOnlySmall.png', 0)
 w, h = template.shape[::-1]
 
 # Perform match operations.
-res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
+res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
 
 # Specify a threshold
 # threshold = 0.39 works with only left.
-threshold = 0.1
+threshold = 0.3
 
 # Store the coordinates of matched area in a numpy array
 loc = np.where(res >= threshold)

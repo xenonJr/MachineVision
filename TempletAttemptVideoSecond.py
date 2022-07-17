@@ -9,16 +9,18 @@ import numpy as np
 parser = argparse.ArgumentParser()
 parser.add_argument(
     '-i', '--input', help='path to input video',
-    default='ImagesQuery/angleRightVideo.mp4'
+    default='ImagesQuery/angleLeftVideo.mp4'
 )
 parser.add_argument(
     '-t', '--template', help='path to the template',
     default='ImagesQuery/leftOnlyFullSize.png'
 )
 args = vars(parser.parse_args())
+rec_count = 0
 
 # Read the video input.
-cap = cv2.VideoCapture(args['input'])
+# cap = cv2.VideoCapture(args['input'])
+cap = cv2.VideoCapture(1)
 if (cap.isOpened() == False):
     print('Error while trying to read video. Please check path again')
 # Get the frame width and height
@@ -64,11 +66,10 @@ while (cap.isOpened()):
         # Draw a rectangle around the matched region.
         for pt in zip(*loc[::-1]):
             print("Found")
-            cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 255), 2)
-
-
-
-
+            if rec_count <= 5:
+                cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 255), 1)
+                rec_count += 1
+        rec_count = 0
         cv2.imshow('Result', frame)
         out.write(frame)
         # Press `q` to exit.

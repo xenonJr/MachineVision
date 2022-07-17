@@ -7,8 +7,8 @@ from tracker import *
 obj_detector = cv2.createBackgroundSubtractorMOG2()
 tracker = EuclideanDistTracker()
 
-img1 = cv2.imread('ImagesQuery/robosub.png', 0)
-img2 = cv2.imread('ImagesTrain/robosubTrain.PNG', 0)
+img1 = cv2.imread('ImagesQuery/aRightSmall.jpg', 0)
+img2 = cv2.imread('ImagesQuery/rightOnlySmall.png', 0)
 
 orb = cv2.ORB_create(nfeatures=5000)
 
@@ -17,7 +17,7 @@ kp2, des2 = orb.detectAndCompute(img2, None)
 
 matches = cv2.BFMatcher().knnMatch(des1, des2, k=2)
 
-good = [[m] for m, n in matches if m.distance < 0.9 * n.distance]
+good = [[m] for m, n in matches if m.distance < 1.001 * n.distance]
 print(len(good))
 img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, good, None, flags=0)
 
