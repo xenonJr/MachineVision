@@ -3,7 +3,7 @@ import os
 import numpy as np
 import cv2
 
-path = 'ImagesQuery'
+path = 'FeatureQuery'
 orb = cv2.ORB_create(nfeatures=5000)
 
 images = []
@@ -28,7 +28,7 @@ def findDes(images):
     return desList
 
 
-def findID(img, desList, thress=700):
+def findID(img, desList, thress=100):
     kp2, des2 = orb.detectAndCompute(img, None)
     matchList = []
     try:

@@ -17,7 +17,7 @@ kp2, des2 = orb.detectAndCompute(img2, None)
 
 matches = cv2.BFMatcher().knnMatch(des1, des2, k=2)
 
-good = [[m] for m, n in matches if m.distance < 1.001 * n.distance]
+good = [[m] for m, n in matches if m.distance < .99 * n.distance]
 print(len(good))
 img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, good, None, flags=0)
 
