@@ -39,6 +39,8 @@ cv2.createTrackbar("UV", "Tracking", 255, 255, show_value)
 #rectangle
 upper_left = (40, 40)
 bottom_right = (580, 420)
+# upper_left = (440, 30)
+# bottom_right = (80, 120)
 p_img = np.zeros((640, 480), dtype=np.uint8)
 h_img = np.zeros((640, 480), dtype=np.uint8)
 
@@ -68,7 +70,10 @@ while True:
     lbBall = np.array([9, 139, 95])  # lower hsv bound for red
     ubBall = np.array([255, 255, 255])  # upper hsv bound to red
 
-    mask = cv2.inRange(hsv, lb, ub)
+    lbCap = np.array([0, 99, 56])  # lower hsv bound for red
+    ubCap = np.array([234, 160, 255])  # upper hsv bound to red
+
+    mask = cv2.inRange(hsv, l_b, u_b)
     # mask = cv2.inRange(hsv, lb, ub)
 
     res = cv2.bitwise_and(frame, frame, mask=mask)
@@ -87,7 +92,6 @@ while True:
         if area > max_area:
             # cv2.drawContours(roi, [cnt], -1, (0, 255, 0), 2)
             x, y, w, h = cv2.boundingRect(cnt)
-
             detections.append([x, y, w, h])
             max_area = area
             maxAreaCo = [x, y, w, h]
@@ -103,8 +107,6 @@ while True:
             if detectedHeight < 420:
                 if detectedHeight > 40:
                     cv2.putText(res, "Inside Box", (50, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
-                    # cv2.putText(res, "Height :" + str(detectedHeight), (50, 110), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
-                    # cv2.putText(res, "Width :" + str(detectedWidth), (50, 170), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
                 else:
                     cv2.putText(res, "Outside Box", (50, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
             else:
@@ -114,15 +116,11 @@ while True:
     else:
         cv2.putText(res, "Outside Box", (50, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
 
-
-
     detectedWidthHeight = (maxAreaCo[0] + maxAreaCo[2], maxAreaCo[1] + maxAreaCo[3])
     cv2.rectangle(res, detectedTopLeft, detectedWidthHeight,
                   (0, 255, 0), 3)
 
     cv2.imshow("res", res)
-
-
     key = cv2.waitKey(1)
     if key == 27:
         break
