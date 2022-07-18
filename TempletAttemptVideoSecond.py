@@ -19,8 +19,8 @@ args = vars(parser.parse_args())
 rec_count = 0
 
 # Read the video input.
-# cap = cv2.VideoCapture(args['input'])
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(args['input'])
+# cap = cv2.VideoCapture(1)
 if (cap.isOpened() == False):
     print('Error while trying to read video. Please check path again')
 # Get the frame width and height

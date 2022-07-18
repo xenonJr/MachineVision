@@ -28,7 +28,8 @@ while True:
     obj_detector = cv2.createBackgroundSubtractorMOG2()
     tracker = EuclideanDistTracker()
 
-    frame = cv2.imread(r'C:\Users\PC\Desktop\Dataset\unBar.png')
+    # frame = cv2.imread(r'C:\Users\PC\Desktop\Dataset\unBar.png')
+    frame = cv2.imread('ImagesQuery/aLeftSmall.jpg')
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
