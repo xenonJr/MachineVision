@@ -68,51 +68,61 @@ def getOrientation(pts, img):
 
 
 # Load the image
-img = cv.imread('ImagesQuery/aRightSmall.jpg')
-# cap = cv.VideoCapture(1)
+# img = cv.imread('ImagesQuery/aRightSmall.jpg')
+cap = cv.VideoCapture('ImagesQuery/angleRightVideo.mp4')
+# cap = cv.VideoCapture('ImagesQuery/angleLeftVideo.mp4')
 
 
 # Was the image there?
-if img is None:
-    print("Error: File not found")
-    exit(0)
+# if img is None:
+#     print("Error: File not found")
+#     exit(0)
+#
+# cv.imshow('Input Image', img)
 
-cv.imshow('Input Image', img)
+while True:
+    # Convert image to grayscale
+    # gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    _, frame = cap.read()
+    # gray = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+    gray = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
+    lb = np.array([0, 0, 0])  # lower hsv bound for red
+    ub = np.array([186, 151, 255])  # upper hsv bound to red
+    mask = cv.inRange(gray, lb, ub)
+    # res = cv.bitwise_and(frame, frame, mask=mask)
+    res = cv.bitwise_and(frame, frame, mask=mask)
 
+    # Convert image to binary
+    _, bw = cv.threshold(mask, 50, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
 
-# Convert image to grayscale
-gray = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-lb = np.array([0, 0, 0])  # lower hsv bound for red
-ub = np.array([186, 151, 255])  # upper hsv bound to red
-mask = cv.inRange(gray, lb, ub)
-res = cv.bitwise_and(img, img, mask=mask)
+    # Find all the contours in the thresholded image
+    contours, _ = cv.findContours(bw, cv.RETR_LIST, cv.CHAIN_APPROX_NONE)
 
-# Convert image to binary
-_, bw = cv.threshold(mask, 50, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
+    for i, c in enumerate(contours):
 
-# Find all the contours in the thresholded image
-contours, _ = cv.findContours(bw, cv.RETR_LIST, cv.CHAIN_APPROX_NONE)
+        # Calculate the area of each contour
+        area = cv.contourArea(c)
 
-for i, c in enumerate(contours):
+        # Ignore contours that are too small or too large
+        if area < 6700 or 100000 < area:
+            continue
 
-    # Calculate the area of each contour
-    area = cv.contourArea(c)
+        # Draw each contour only for visualisation purposes
+        cv.drawContours(res, contours, i, (0, 0, 255), 2)
 
-    # Ignore contours that are too small or too large
-    if area < 6700 or 100000 < area:
-        continue
+        # Find the orientation of each shape
+        getOrientation(c, res)
 
-    # Draw each contour only for visualisation purposes
-    cv.drawContours(img, contours, i, (0, 0, 255), 2)
+    cv.imshow('Output', res)
+    # cv.imshow('Output', frame)
+    # cv.imshow("res", res)
 
-    # Find the orientation of each shape
-    getOrientation(c, img)
+    # Save the output image to the current directory
+    # cv.imwrite("output_img.jpg", img)
+    key = cv.waitKey(1)
+    if key == 27:
+        break
 
-cv.imshow('Output Image', img)
-# cv.imshow("res", res)
-
-# Save the output image to the current directory
-# cv.imwrite("output_img.jpg", img)
-
-cv.waitKey(0)
+cap.release()
 cv.destroyAllWindows()
+

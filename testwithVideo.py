@@ -74,7 +74,6 @@ while True:
     cv2.rectangle(res, (maxAreaCo[0], maxAreaCo[1]), (maxAreaCo[0] + maxAreaCo[2], maxAreaCo[1] + maxAreaCo[3]),
                   (0, 255, 0), 3)
 
-
     cv2.imshow("res", res)
 
     key = cv2.waitKey(1)
