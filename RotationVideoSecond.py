@@ -69,9 +69,9 @@ def getOrientation(pts, img):
 
 # Load the image
 # img = cv.imread('ImagesQuery/aRightSmall.jpg')
-# cap = cv.VideoCapture('ImagesQuery/angleRightVideo.mp4')
+cap = cv.VideoCapture('ImagesQuery/angleRightVideo.mp4')
 # cap = cv.VideoCapture('ImagesQuery/angleLeftVideo.mp4')
-cap = cv.VideoCapture(1)
+# cap = cv.VideoCapture(1)
 
 
 # Was the image there?
