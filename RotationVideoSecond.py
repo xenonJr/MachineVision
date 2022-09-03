@@ -69,7 +69,7 @@ def getOrientation(pts, img):
 
 # Load the image
 # img = cv.imread('ImagesQuery/aRightSmall.jpg')
-cap = cv.VideoCapture('ImagesQuery/angleRightVideo.mp4')
+cap = cv.VideoCapture('ImagesQuery/GX010311.mp4')
 # cap = cv.VideoCapture('ImagesQuery/angleLeftVideo.mp4')
 # cap = cv.VideoCapture(1)
 
@@ -90,7 +90,10 @@ while True:
     gray = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
     lb = np.array([0, 0, 0])  # lower hsv bound for red
     ub = np.array([186, 151, 255])  # upper hsv bound to red
-    mask = cv.inRange(gray, lb, ub)
+
+    lbBlack = np.array([0, 0, 0])
+    ubBlack = np.array([255, 236, 125])
+    mask = cv.inRange(gray, lbBlack, ubBlack)
     # res = cv.bitwise_and(frame, frame, mask=mask)
     res = cv.bitwise_and(frame, frame, mask=mask)
 

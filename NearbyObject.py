@@ -16,7 +16,7 @@ def nothing(x):
     pass
 
 
-cap = cv2.VideoCapture(1);
+cap = cv2.VideoCapture(0)
 # cap = cv2.VideoCapture(r'C:\Users\PC\Desktop\ballpRe\mvd\2.mp4')
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
@@ -72,8 +72,10 @@ while True:
 
     lbCap = np.array([0, 99, 56])  # lower hsv bound for red
     ubCap = np.array([234, 160, 255])  # upper hsv bound to red
+    lower_blue = np.array([100, 150, 0])
+    upper_blue = np.array([140, 255, 255])
 
-    mask = cv2.inRange(hsv, l_b, u_b)
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
     # mask = cv2.inRange(hsv, lb, ub)
 
     res = cv2.bitwise_and(frame, frame, mask=mask)

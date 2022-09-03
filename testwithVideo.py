@@ -16,7 +16,7 @@ def nothing(x):
     pass
 
 
-cap = cv2.VideoCapture(1);
+cap = cv2.VideoCapture(0)
 obj_detector = cv2.createBackgroundSubtractorMOG2()
 tracker = EuclideanDistTracker()
 

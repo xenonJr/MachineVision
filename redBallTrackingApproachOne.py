@@ -16,7 +16,7 @@ def nothing(x):
     pass
 
 
-cap = cv2.VideoCapture(1);
+cap = cv2.VideoCapture(0)
 # cap = cv2.VideoCapture(r'C:\Users\PC\Desktop\ballpRe\mvd\2.mp4')
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
@@ -68,13 +68,13 @@ while True:
     lbBall = np.array([9, 139, 95])  # lower hsv bound for red
     ubBall = np.array([255, 255, 255])  # upper hsv bound to red
 
-    mask = cv2.inRange(hsv, l_b, u_b)
+    mask = cv2.inRange(hsv, lb, ub)
     # mask = cv2.inRange(hsv, lb, ub)
 
     res = cv2.bitwise_and(frame, frame, mask=mask)
 
-    r = cv2.rectangle(res, upper_left, bottom_right, (100, 50, 200), 5)
-    rect_img = res[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
+    # r = cv2.rectangle(res, upper_left, bottom_right, (100, 50, 200), 5)
+    # rect_img = res[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
 
     # modified approach (worked)
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
